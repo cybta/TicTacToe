@@ -9,7 +9,7 @@
 
 body {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,10 +39,13 @@ h1 {
 }
 
 .flexcont {
-  width: 250px;
+  width: 300px;
   display: flex;
   margin-bottom: 25px;
   color: #fff;
+  padding: 20px 20px;
+  background: #222;
+  border-radius: 15px;
 }
 .flexcont.ai-c {
   align-items: center;
@@ -230,5 +233,13 @@ button:hover {
 @media all and (max-width: 960px) {
   body {
     font-size: 19px;
+  }
+
+  .board {
+    padding: 20px;
+  }
+
+  .board:after {
+    margin-top: -22px;
   }
 }
