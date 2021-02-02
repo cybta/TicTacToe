@@ -230,6 +230,16 @@ button:hover {
   background: #333;
 }
 
+.note {
+  font-family: "Lato", sans-serif;
+  position: absolute;
+  font-size: 0.9rem;
+  color: #ccc;
+  left: 50%;
+  bottom: 15px;
+  transform: translateX(-50%);
+}
+
 @media all and (max-width: 960px) {
   body {
     font-size: 19px;
