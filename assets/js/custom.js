@@ -1,10 +1,12 @@
 let board;
-let gameEnded;
 let playerScore = 0;
 let aiScore = 0;
 const results = document.querySelector('.results');
-var player = 'player';
+const body = document.getElementsByTagName('body');
+var human = 'player';
 var aiPlayer = 'ai';
+let easy = false;
+
 const winingCombos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -39,7 +41,6 @@ const tiles = document.querySelectorAll('.board > div');
 startGame()
 
 function startGame() {
-  gameEnded = false;
   results.style.display = 'none';
   results.classList.remove('player', 'ai');
   document.querySelector('.board').classList.remove('fademe');
@@ -58,10 +59,10 @@ function startGame() {
 function turnClick(tile) {
   if (typeof board[tile.target.id] == 'number') {
     // Detect that the player clicked on a specific tile
-    turn(tile.target.id, player);
+    turn(tile.target.id, human);
 
     //Check if it's a draw stop AI from playing else AI will play
-    if (!gameEnded && !checkTie()) turn(bestSpot(), aiPlayer)
+    if (!checkTie()) turn(bestSpot(), aiPlayer)
   }
 }
 
@@ -86,7 +87,6 @@ function checkWin(board, winPlayer) {
   for (let [index, win] of winingCombos.entries()) {
     if (win.every(elem => plays.indexOf(elem) > -1)) {
       gameWon = { index: index, winPlayer: winPlayer };
-      gameEnded = true;
       break;
     }
   }
@@ -96,7 +96,7 @@ function checkWin(board, winPlayer) {
 function gameOver(gameWon) {
   for (let index of winingCombos[gameWon.index]) {
     // Detect what player won and add Win/Loss class on the responsible Tiles
-    gameWon.winPlayer == player ?
+    gameWon.winPlayer == human ?
       document.getElementById(index).classList.add('win') :
       document.getElementById(index).classList.add('loss')
   }
@@ -106,7 +106,7 @@ function gameOver(gameWon) {
 
   results.classList.add(gameWon.winPlayer);
 
-  if(gameWon.winPlayer == player){
+  if(gameWon.winPlayer == human){
     playerScore ++
   } else{
     aiScore++
@@ -115,7 +115,7 @@ function gameOver(gameWon) {
   document.querySelector('.aiscore').innerText = aiScore;  
 
 
-  announceWinner(gameWon.winPlayer == player ?
+  announceWinner(gameWon.winPlayer == human ?
     // Randomise the Win/Loss Message in the popup
     winningMessages[Math.floor(Math.random() * drawMessages.length)] :
     losingMessages[Math.floor(Math.random() * drawMessages.length)]
@@ -133,11 +133,22 @@ function emptyTiles() {
   return board.filter(emptyTile => typeof emptyTile == 'number')
 }
 
-// Detect the best spots for the AI playing the first Empty tile
+// Detect the best spots for the AI playing a Random tile
 function bestSpot() {
-  const availableTiles = emptyTiles();
+  if(easy){
+    const availableTiles = emptyTiles();
+    return availableTiles[Math.floor(Math.random() * availableTiles.length)];
+  } else{
+    return miniMax(board, aiPlayer).index;
+  }
+}
 
-  return availableTiles[Math.floor(Math.random() * availableTiles.length)]
+function playEasy(){
+  easy = true;
+}
+
+function playHard(){
+  easy = false;
 }
 
 function checkTie() {
@@ -153,6 +164,58 @@ function checkTie() {
   }
 
   return false;
+}
+
+
+function miniMax(newBoard, player) {
+	var availSpots = emptyTiles();
+
+	if (checkWin(newBoard, human)) {
+		return {score: -5};
+	} else if (checkWin(newBoard, aiPlayer)) {
+		return {score: 5};
+	} else if (availSpots.length === 0) {
+		return {score: 0};
+	}
+	var moves = [];
+	for (var i = 0; i < availSpots.length; i++) {
+		var move = {};
+		move.index = newBoard[availSpots[i]];
+		newBoard[availSpots[i]] = player;
+
+		if (player == aiPlayer) {
+			var result = miniMax(newBoard, human);
+			move.score = result.score;
+		} else {
+			var result = miniMax(newBoard, aiPlayer);
+			move.score = result.score;
+		}
+
+		newBoard[availSpots[i]] = move.index;
+
+		moves.push(move);
+	}
+
+	var bestMove;
+	if(player === aiPlayer) {
+		var bestScore = -10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score > bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	} else {
+		var bestScore = 10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score < bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	}
+
+	return moves[bestMove];
 }
 
 

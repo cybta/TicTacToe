@@ -18,10 +18,14 @@
     <div class="row">
         Use the keyboard arrow keys, mouse or tap on mobile to check your tiles 
     </div>
-    <div class="flexcont ai-c jc-sa">
+    <div class="flexcont ai-c jc-sb">
         <div>Score:</div>
         <div><span>You</span> <span class="playerscore">0</span></div>
         <div><span>Ai</span> <span class="aiscore">0</span></div>
+        <div>
+            <button onclick="playEasy()">Easy</button>
+            <button onclick="playHard()">Hard</button>
+        </div>
     </div>
     <div class="flex board">
         <div id="0" class="focused"></div>
@@ -40,7 +44,7 @@
         <button onclick="startGame()">New game</button>
     </div>
 
-    <small class="note">NB: minimax algorythim is on its way</small>
+    <small class="note">minimax algorithm is On</small>
 
     <script src="assets/js/custom.js"></script>
 </body>
