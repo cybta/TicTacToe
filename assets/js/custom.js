@@ -39,6 +39,7 @@ startGame()
 function startGame() {
   gameEnded = false;
   results.style.display = 'none';
+  results.classList.remove('player', 'ai');
   document.querySelector('.board').classList.remove('fademe');
 
   board = Array.from(Array(9).keys());
