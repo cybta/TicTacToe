@@ -1,5 +1,7 @@
 let board;
 let gameEnded;
+let playerScore = 0;
+let aiScore = 0;
 const results = document.querySelector('.results');
 var player = 'player';
 var aiPlayer = 'ai';
@@ -102,8 +104,16 @@ function gameOver(gameWon) {
     tiles[i].removeEventListener('click', turnClick, false);
   }
 
-  
   results.classList.add(gameWon.winPlayer);
+
+  if(gameWon.winPlayer == player){
+    playerScore ++
+  } else{
+    aiScore++
+  }
+  document.querySelector('.playerscore').innerText = playerScore;
+  document.querySelector('.aiscore').innerText = aiScore;  
+
 
   announceWinner(gameWon.winPlayer == player ?
     // Randomise the Win/Loss Message in the popup

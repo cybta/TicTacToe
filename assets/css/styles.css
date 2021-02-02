@@ -38,6 +38,19 @@ h1 {
   padding: 0 20px;
 }
 
+.flexcont {
+  width: 250px;
+  display: flex;
+  margin-bottom: 25px;
+  color: #fff;
+}
+.flexcont.ai-c {
+  align-items: center;
+}
+.flexcont.jc-sa {
+  justify-content: space-around;
+}
+
 .board {
   position: relative;
 }
@@ -56,7 +69,7 @@ h1 {
   content: "";
 }
 
-.flex {
+.board {
   display: flex;
   flex-wrap: wrap;
   width: 500px;
@@ -64,7 +77,7 @@ h1 {
   justify-content: center;
 }
 
-.flex > div {
+.board > div {
   width: 33.333%;
   padding: 16.666% 0;
   border-right: 1px solid #fff;
@@ -81,12 +94,12 @@ h1 {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.flex > div:nth-child(3n) {
+.board > div:nth-child(3n) {
   border-right: none;
 }
 
-.flex > div:before,
-.flex > div:after {
+.board > div:before,
+.board > div:after {
   transition: 0.3s;
   -moz-transition: 0.3s;
   -webkit-transition: 0.3;
@@ -94,7 +107,7 @@ h1 {
   content: "";
 }
 
-.flex > div.ai:before {
+.board > div.ai:before {
   width: 24%;
   padding: 12% 0;
   border-radius: 50%;
@@ -109,8 +122,8 @@ h1 {
   opacity: 1;
 }
 
-.flex > div.player:before,
-.flex > div.player:after {
+.board > div.player:before,
+.board > div.player:after {
   width: 5px;
   height: 50px;
   background: #fff;
@@ -124,7 +137,7 @@ h1 {
   opacity: 1;
 }
 
-.flex > div.player:after {
+.board > div.player:after {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
