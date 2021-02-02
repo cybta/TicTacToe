@@ -101,6 +101,9 @@ function gameOver(gameWon) {
     tiles[i].removeEventListener('click', turnClick, false);
   }
 
+  
+  results.classList.add(gameWon.winPlayer);
+
   announceWinner(gameWon.winPlayer == player ?
     // Randomise the Win/Loss Message in the popup
     winningMessages[Math.floor(Math.random() * drawMessages.length)] :
